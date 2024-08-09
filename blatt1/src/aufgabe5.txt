@@ -1,0 +1,38 @@
+
+Schritte des Debugging-Prozesses:
+
+1.Setzen eines Breakpoints:
+   - Ich habe einen Breakpoint in der Zeile gesetzt, 
+     die vor dem Aufruf `cout << "Wir sind: " << team[0] << "..." << team[teamSize] << endl;` liegt, 
+     um die Ausführung des Programms vor dieser Anweisung zu stoppen.
+
+2.Ausführung des Programms bis zum Breakpoint:
+   - Ich startete das Programm im Debug-Modus und das Programm stoppte an dem gesetzten Breakpoint, 
+     wodurch ich in der Lage war, die Werte der Variablen zu überprüfen.
+
+3.Überprüfung der Variablenwerte:
+   - Im Debugger überprüfte ich die Größe des `team`-Vektors, 
+     indem ich mir die Variable `teamSize` ansah. `teamSize` zeigte die Anzahl der Elemente im Vektor an, 
+     die in diesem Fall 4 betrug (nachdem die zwei weiteren Namen "Steve" und "Flo" hinzugefügt wurden).
+
+4.Identifizierung des Problems:
+   - Durch Einzelschritt-Ausführung (Step Over) beobachtete ich, 
+     dass der Ausdruck `team[teamSize]` außerhalb der Grenzen des Vektors liegt, 
+     da der Index in C++ Vektoren von 0 beginnt und `teamSize` den Index des "nicht vorhandenen" nächsten Elements nach dem letzten gültigen Element darstellt.
+
+Behebung des Fehlers:
+
+1.Korrektur des Code-Ausdrucks:
+   - Ich änderte den fehlerhaften Ausdruck `team[teamSize]` zu `team[teamSize - 1]`, 
+     um auf das letzte gültige Element im Vektor zuzugreifen.
+
+2.Erneute Kompilierung und Ausführung:
+   - Nach der Korrektur kompilierte ich das Programm erneut und führte es aus. 
+     Es gab keine Laufzeitfehler mehr, und das Programm gab den erwarteten Text "Wir sind: Paddy...Flo" aus.
+
+3.Validierung der Korrektur:
+   - Ich setzte den Breakpoint diesmal nach der Korrektur und verifizierte, 
+     dass der korrigierte Ausdruck das korrekte letzte Element "Flo" anstelle eines Fehlers lieferte.
+
+Diese Dokumentation spiegelt den Debugging-Prozess und die Korrekturmaßnahmen wider, die ich für die Behebung des Fehlers in der Datei `main.cpp` durchgeführt habe.
+
