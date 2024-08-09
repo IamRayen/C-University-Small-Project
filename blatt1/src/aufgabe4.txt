@@ -1,0 +1,24 @@
+1. Gebt in einer Textdatei aufgabe4.txt die erste Fehlermeldung des Compilers an, 
+und zeigt daran ...
+
+(a) in welche Datei der Fehler auftritt: 
+`main.cpp`.
+
+(b) in welche Zeile dieser Datei der Fehler auftritt:
+Zeile 31
+
+(c) den Code-Ausdruck bei dem der Fehler auftritt: 
+cout << " Wir sind : " << team [0] << "..." << team [ teamSize ] << endl ;
+
+(d) die Beschreibung des Fehlers: 
+1.error: 'team' was not declared in this scope; did you mean 'tm'
+2.error: 'teamSize' was not declared in this scope
+Dies bedeutet, dass man versuchen hat, Variablen zu verwenden, 
+bevor man deklariert wurde  
+
+2. Beschreibt in der selben Datei mit eigenen Worten,warum der Code nicht kompiliert.
+Der Code kompiliert nicht, weil die Variable `team` und die Variable `teamSize` vor ihrer Deklaration 
+verwendet werden.
+In C++ muss eine Variable deklariert werden, bevor sie verwendet werden kann.
+Die Zeilen, in denen `team` und `teamSize` verwendet werden, müssen nach ihrer Deklaration und
+Initialisierung stehen.
