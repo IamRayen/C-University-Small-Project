@@ -1,6 +1,5 @@
-*/.idea/
-
-*/*.pdf
-*.zip
-*/src/cmake-build-debug/
-*/src/*.idea
+*.pdf
+.zip 
+*.rar
+cmake-build-debug
+*.idea
