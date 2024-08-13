@@ -1,5 +1,6 @@
-.idea/
-cmake-build-*
-*.pdf
-blatt*/blatt*/src/cmake-build-debug/
+*/.idea/
+
+*/*.pdf
 *.zip
+*/src/cmake-build-debug/
+*/src/*.idea
