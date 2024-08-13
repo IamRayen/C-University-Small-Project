@@ -1,3 +1,4 @@
 .idea/
 cmake-build-*
 *.pdf
+blatt*/src/cmake-build-debug/
