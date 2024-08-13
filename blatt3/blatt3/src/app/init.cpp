@@ -3,26 +3,27 @@
 // TODO Aufgabe 7:
 //  Bringe die `include`- und `using`-Anweisungen in eine sinnvolle Ordnung.
 #include <string>
-#include "Coordinates.h"
-using Sea::Coordinates;
 using std::string;
 #include <iostream>
 using std::getline;
 using std::cin;
 using std::endl;
-
 using std::cout;
-#include "Ship.h"
 #include <vector>
-#include <climits>
-#include "Constants.h"
-using GameObjects::Ship;
-using GameObjects::PlayerSea;
 using std::vector;
-#include "Object.h"
+#include <climits>
+
+#include "Ship.h"
+using GameObjects::Ship;
+#include "Constants.h"
 using GameObjects::Constants;
-using Sea::Orientation;
 #include "PlayerSea.h"
+using GameObjects::PlayerSea;
+
+#include "Object.h"
+using Sea::Orientation;
+#include "Coordinates.h"
+using Sea::Coordinates;
 
 
 unsigned int const Constants::seaSizeX = 3;
@@ -45,7 +46,9 @@ string inputPlayerName()
     //  Es soll ein Spielername eingegeben werden.
     //  In der Ausgabe soll eine Spielernummer durchgezählt werden (Spieler 1, Spieler 2).
     //  Dazu soll eine `static` Variable verwendet werden.
-    cout << endl << "Name von Spieler " << "???" << ":";
+    static unsigned int playerCount = 0;
+
+    cout << endl << "Name von Spieler " << ++playerCount << ":";
 
     string playerName;
     getline(cin, playerName);
@@ -72,8 +75,12 @@ bool initializeShip(PlayerSea & playerSea, unsigned int size)
     auto addResult = playerSea.addShip(ship);
     // TODO Aufgabe 6:
     //  Erweitert die Auswertung, und gebt entsprechend des Status-Rückgabewerts von `addShip(..)` eine spezifische Meldung aus.
-    if (!addResult) {
-        cout << "Das Schiff muss im Wasser liegen und dort darf nicht schon ein anderes Schiff liegen." << endl;
+    if (addResult == PlayerSea::AddShipResult::outsideSeaBounds) {
+        cout << "Das Schiff muss im Wasser liegen (" << PlayerSea::printSeaArea() << ")." << endl;
+        return false;
+    }
+    else if (addResult == PlayerSea::AddShipResult::overlapOtherShip) {
+        cout << "Dort liegt schon ein Schiff." << endl;
         return false;
     }
     return true;

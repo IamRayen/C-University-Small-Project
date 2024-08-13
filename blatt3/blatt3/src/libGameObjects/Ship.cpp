@@ -2,7 +2,7 @@
 
 #include "Constants.h"
 // TODO Aufgabe 7:
-//  Warum ist die folgende using-Anweisung hier unnötig?
+//  Warum ist die folgende using-Anweisung hier unnötig? Da wir schon im Namensraum GameObjects sind.
 using GameObjects::Constants;
 
 
@@ -25,19 +25,21 @@ namespace GameObjects {
     //  Definiert die Funktion `checkAndUpdateIncomingMissile(..)`.
     //  Nutzt die Funktionen von `Sea::Object`, um zu prüfen, ob die übergebene Rakete (`missile`) dieses Schiff trifft.
     //  Bei einem Treffer, markiert `missile` entsprechend.
-    /*
-     ???
-     */
+    bool Ship::checkAndUpdateIncomingMissile(Missile & missile){
+        if(atCoordinates(missile)){
+            missile.hitSomething();
+            ++numMissilesHit;
+            return true;
+        }
+        return false;
+    }
 
     bool Ship::isDestroyed() const
     {
         // TODO Aufgabe 4:
         //  Prüft, ob alle Felder des Schiffs einmal getroffen wurden.
         //  (Tipp: Es können nie mehrere Raketen auf die gleichen Koordinaten geschossen werden.)
-        return false;
-        /*
-         ???
-         */
+        return numMissilesHit == size;
     }
 
 }

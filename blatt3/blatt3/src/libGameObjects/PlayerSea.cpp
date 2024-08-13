@@ -1,5 +1,9 @@
 #include "PlayerSea.h"
 
+#include "iostream"
+using std::cout;
+using std::endl;
+
 #include <string>
 using std::string;
 using std::to_string;
@@ -24,8 +28,28 @@ namespace GameObjects {
 
     string PlayerSea::printSeaArea()
     {
-        return "Spielfeld: 0-" + to_string(Constants::seaSizeX - 1) +
-                       " x 0-" + to_string(Constants::seaSizeY - 1);
+       return "Spielfeld: 0-" + to_string(Constants::seaSizeX - 1) +
+                    " x 0-" + to_string(Constants::seaSizeY - 1);
+
+    }
+
+    void PlayerSea::printSea(){
+        for(int i = 0; i < Constants::seaSizeY;++i){
+            for(int j = 0; j < Constants::seaSizeX; ++j){
+                Coordinates coords = Coordinates(i,j);
+                bool hit = false;
+                bool kill = false;
+                for (auto missile : missilesSent) {
+                    if (missile.hasHitSomething() && missile.samePositionAs(coords)) {
+                        kill = true;
+                    }else if(missile.samePositionAs(coords)){
+                        hit= true;
+                    }
+                }
+                hit? cout << "x" : kill? cout << "k" : cout << "~";
+            }
+            cout << endl;
+        }
     }
 
     bool PlayerSea::overlapWithExistingShips(Ship const & otherShip) const
@@ -42,17 +66,26 @@ namespace GameObjects {
     // TODO Aufgabe 6:
     //  Erweitert `addShip` so, dass der Rückgabewert angibt, welches tatsächliche Problem aufgetreten ist:
     //  Außerhalb des Spielfelds (Seegrenzen) oder Überlappung mit einem anderen Schiff.
-    /*
-     ???
-     */
-    bool PlayerSea::addShip(Ship const & ship)
+    PlayerSea::AddShipResult PlayerSea::addShip(Ship const & ship)
     {
-        if (!ship.isInsideSeaBounds() || overlapWithExistingShips(ship)) {
-            return false;
+        if (!ship.isInsideSeaBounds()) {
+            return AddShipResult::outsideSeaBounds;
+        }
+        if (overlapWithExistingShips(ship)) {
+            return AddShipResult::overlapOtherShip;
         }
         ships.push_back(ship);
-        return true;
+        return AddShipResult::added;
     }
+
+//    bool PlayerSea::addShip(Ship const & ship)
+//    {
+//        if (!ship.isInsideSeaBounds() || overlapWithExistingShips(ship)) {
+//            return false;
+//        }
+//        ships.push_back(ship);
+//        return true;
+//    }
 
     bool PlayerSea::sendMissileTo(PlayerSea & otherSea, Coordinates const & targetCoordinates)
     {
