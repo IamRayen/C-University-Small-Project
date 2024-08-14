@@ -21,8 +21,11 @@ namespace Sea {
 
     // TODO Aufgabe 4:
     //  Definiert den `operator==(..)` identisch zu und als Ersatz für die Funktion `samePositionAs(..)`.
-    bool Coordinates::samePositionAs(Coordinates const & otherCoordinates) const
-    {
+//    bool Coordinates::samePositionAs(Coordinates const & otherCoordinates) const
+//    {
+//        return samePositionAs(otherCoordinates.getX(), otherCoordinates.getY());
+//    }
+    bool Coordinates::operator==(Coordinates const & otherCoordinates) const {
         return samePositionAs(otherCoordinates.getX(), otherCoordinates.getY());
     }
 
@@ -46,6 +49,7 @@ namespace Sea {
 // TODO Aufgabe 4:
 //  Implementiert den `operator<<(..)` so, dass er die `toString()` nutzt, um die Koordinaten in den `std::ostream` auszugeben.
 //  (Eine Referenz von `std::ostream` kann wie `std::cout` verwendet werden.)
-/*
- ???
- */
+
+std::ostream & operator<<(std::ostream & stream, Sea::Coordinates const & coords){
+    return stream << coords.toString();
+}
