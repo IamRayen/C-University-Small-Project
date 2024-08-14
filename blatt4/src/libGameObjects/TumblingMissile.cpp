@@ -53,8 +53,20 @@ namespace GameObjects {
 
     // TODO Aufgabe 3:
     //  Definiert die Funktionen `getX()`, `getY()` und `toString()`.
-/*
- ???
- */
 
+    unsigned int TumblingMissile::getX() const {
+        return Coordinates::getX() + offsetX;
+    }
+    unsigned int TumblingMissile::getY() const {
+        return Coordinates::getY() + offsetY;
+    }
+
+    std::string TumblingMissile::toString() const {
+        return "(" +
+        to_string(Coordinates::getX()) + ", " + to_string(Coordinates::getY()) +
+        ") + (" +
+        to_string(offsetX) + ", " + to_string(offsetY) +
+        ") -> " +
+        Coordinates::toString();
+    }
 }
