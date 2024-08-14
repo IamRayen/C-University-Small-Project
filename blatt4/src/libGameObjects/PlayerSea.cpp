@@ -43,17 +43,20 @@ namespace GameObjects {
     }
 
     // TODO Aufgabe 2:
-    PlayerSea::AddShipResult PlayerSea::addShip(Ship const & ship)
+    void PlayerSea::addShip(Ship const & ship)
     {
         if (!ship.isInsideSeaBounds()) {
-            return AddShipResult::outsideSeaBounds;
+            AddShipException e;
+            e.outsideSeaBounds = true;
+            throw e;
         }
         if (overlapWithExistingShips(ship)) {
-            return AddShipResult::overlapOtherShip;
+            AddShipException e;
+            e.overlapOtherShip = true;
+            throw e;
         }
         ships.push_back(ship);
         ship.output(gridOwnSea);
-        return AddShipResult::added;
     }
 
     // TODO Aufgabe 1:

@@ -43,12 +43,13 @@ namespace GameObjects {
         // TODO Aufgabe 2:
         //  Deklariert hier (mindestens) eine eigene Exception-Klasse, die von `std::exception` erbt.
         //  Entfernt `AddShipResult` und passt die Funktion `addShip(..)` entsprechend an.
-        enum class AddShipResult {
-            added,
-            outsideSeaBounds,
-            overlapOtherShip
+        class AddShipException : public std::exception {
+        public:
+            bool outsideSeaBounds = false;
+            bool overlapOtherShip = false;
         };
-        AddShipResult addShip(Ship const & ship);
+        void addShip(Ship const & ship);
+
 
         // TODO Aufgabe 1:
         bool sendMissileTo(PlayerSea & otherSea, const std::shared_ptr<Missile>& missile);
