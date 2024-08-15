@@ -68,13 +68,16 @@ bool initializeShip(PlayerSea & playerSea, unsigned int size)
     Ship ship = inputShip(size);
     // TODO Aufgabe 2:
     //  Ersetzt die Auswertung des Rückgabewerts von `addShip(..)` durch das Abfangen und Behandeln der entsprechenden Exceptions.
-    auto addResult = playerSea.addShip(ship);
-    if (addResult == PlayerSea::AddShipResult::outsideSeaBounds) {
-        cout << "Das Schiff muss im Wasser liegen (" << PlayerSea::getSeaBounds() << ")." << endl;
-        return false;
+    try {
+        playerSea.addShip(ship);
     }
-    else if (addResult == PlayerSea::AddShipResult::overlapOtherShip) {
-        cout << "Dort liegt schon ein Schiff." << endl;
+    catch (PlayerSea::AddShipException const & e) {
+        if (e.outsideSeaBounds) {
+            cout << "Das Schiff muss im Wasser liegen (" << PlayerSea::getSeaBounds() << ")." << endl;
+        }
+        else if (e.overlapOtherShip) {
+            cout << "Dort liegt schon ein Schiff." << endl;
+        }
         return false;
     }
     return true;

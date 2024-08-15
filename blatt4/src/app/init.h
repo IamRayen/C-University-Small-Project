@@ -24,4 +24,6 @@ Sea::Orientation inputOrientation();
 bool checkForInputError();
 
 
+
+
 #endif //BLATT4_INIT_H

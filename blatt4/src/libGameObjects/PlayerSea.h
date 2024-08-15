@@ -21,10 +21,10 @@ namespace GameObjects {
 
         // TODO Aufgabe 1:
         //  Die Listen `missilesSent` und `missilesReceived` sollen nicht direkt Missile-Instanzen (Kopien) speichern, sondern Smart Pointer (`shared_ptr`) nutzen, um auf existierende Instanzen zu verweisen.
-        std::vector<Missile> missilesSent, missilesReceived;
+        std::vector<std::shared_ptr<Missile>> missilesSent, missilesReceived;
 
         // TODO Aufgabe 1:
-        bool receiveMissile(Missile & missile);
+        bool receiveMissile(const std::shared_ptr<Missile>& missile);
 
         OutputGrid gridOwnSea = OutputGrid(Constants::seaSizeY, std::vector<OutputGridCell>(Constants::seaSizeX));
         OutputGrid gridOtherSea = gridOwnSea;
@@ -43,15 +43,16 @@ namespace GameObjects {
         // TODO Aufgabe 2:
         //  Deklariert hier (mindestens) eine eigene Exception-Klasse, die von `std::exception` erbt.
         //  Entfernt `AddShipResult` und passt die Funktion `addShip(..)` entsprechend an.
-        enum class AddShipResult {
-            added,
-            outsideSeaBounds,
-            overlapOtherShip
+        class AddShipException : public std::exception {
+        public:
+            bool outsideSeaBounds = false;
+            bool overlapOtherShip = false;
         };
-        AddShipResult addShip(Ship const & ship);
+        void addShip(Ship const & ship);
+
 
         // TODO Aufgabe 1:
-        bool sendMissileTo(PlayerSea & otherSea, Missile missile);
+        bool sendMissileTo(PlayerSea & otherSea, const std::shared_ptr<Missile>& missile);
 
         bool allShipsDestroyed() const;
 

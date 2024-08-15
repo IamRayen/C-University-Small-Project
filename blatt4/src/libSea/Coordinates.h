@@ -20,7 +20,8 @@ namespace Sea {
         // TODO Aufgabe 4:
         //  Ersetzt die Funktion `samePositionAs(..)` durch den `operator==(..)`.
         //  Rückgabetyp, Parameter und Inhalt bleiben identisch.
-        bool samePositionAs(Coordinates const & otherCoordinates) const;
+//        bool samePositionAs(Coordinates const & otherCoordinates) const;
+        bool operator==(Coordinates const & otherCoordinates) const;
 
         virtual unsigned int getX() const;
         virtual unsigned int getY() const;
@@ -33,9 +34,7 @@ namespace Sea {
 // TODO Aufgabe 4:
 //  Deklariert einen `operator<<(..)`.
 //  Dieser bekommt eine `std::ostream`- und eine `Sea::Coordinates`-Referenz übergeben und liefert eine `std::ostream`-Referenz zurück.
-/*
- ???
- */
 
+std::ostream & operator<<(std::ostream & stream, Sea::Coordinates const & coords);
 
 #endif //BLATT4_COORDINATES_H

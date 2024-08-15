@@ -43,39 +43,42 @@ namespace GameObjects {
     }
 
     // TODO Aufgabe 2:
-    PlayerSea::AddShipResult PlayerSea::addShip(Ship const & ship)
+    void PlayerSea::addShip(Ship const & ship)
     {
         if (!ship.isInsideSeaBounds()) {
-            return AddShipResult::outsideSeaBounds;
+            AddShipException e;
+            e.outsideSeaBounds = true;
+            throw e;
         }
         if (overlapWithExistingShips(ship)) {
-            return AddShipResult::overlapOtherShip;
+            AddShipException e;
+            e.overlapOtherShip = true;
+            throw e;
         }
         ships.push_back(ship);
         ship.output(gridOwnSea);
-        return AddShipResult::added;
     }
 
     // TODO Aufgabe 1:
-    bool PlayerSea::sendMissileTo(PlayerSea & otherSea, Missile missile)
+    bool PlayerSea::sendMissileTo(PlayerSea & otherSea, const std::shared_ptr<Missile>& missile)
     {
         otherSea.receiveMissile(missile);
         missilesSent.push_back(missile);
         // TODO Aufgabe 1:
-        missile.output(gridOtherSea);
-        return missile.hasHitSomething();
+        missile->output(gridOtherSea);
+        return missile->hasHitSomething();
     }
 
     // TODO Aufgabe 1:
-    bool PlayerSea::receiveMissile(Missile & missile)
+    bool PlayerSea::receiveMissile(const std::shared_ptr<Missile>& missile)
     {
         for (unsigned int shipIdx = 0; shipIdx < ships.size(); ++shipIdx) {
             // TODO Aufgabe 1:
-            ships[shipIdx].checkHits(missile);
+            ships[shipIdx].checkHits(*missile);
         }
         missilesReceived.push_back(missile);
-        missile.output(gridOwnSea);
-        return missile.hasHitSomething();
+        missile->output(gridOwnSea);
+        return missile->hasHitSomething();
     }
 
     bool PlayerSea::allShipsDestroyed() const
